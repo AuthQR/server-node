@@ -14,11 +14,11 @@
         
         var op = $.extend(defaultOptions, options);
         
-        if( !io ){
+        if( typeof io == "undefined" ){
             throw Error('Required Socket.io lib not found');
         }
         
-        var socket = io.connect('/');
+        var socket = io.connect('//authqr.herokuapp.com/');
         
         socket.on('connect',function(){
             console.log('Connection successful');
