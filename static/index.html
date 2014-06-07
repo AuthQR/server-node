@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" ng-app>
+  <head>
+    <title>AuthQR Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/jquery.authqr.js"></script>
+    <script>
+        $(function(){
+           
+            $.authQR({
+                image: $("#authqr"),
+                code: $("#code"),
+                callback: function(code){
+                    console.log(code);
+                    
+                    $.ajax({
+                        url: '/verify',
+                        data: {
+                            code: code
+                        },
+                        success: function(res){
+                            if(res.error){
+                                console.log('Error code '+res.error.code+': '+res.error.message);
+                                return;
+                            } 
+                            
+                            $("#user").val(res.user);
+                        }
+                    });
+                }
+            });
+                
+        });
+    </script>
+  </head>
+  <body>
+    <h1>Demo</h1>
+    
+    Ao carregar a página, o plugin mostra a seguinte imagem: <br />
+    <div id="authqr"></div>
+    
+    Quando o usuário ler o QR Code com seu smartphone, o servidor irá responder um código temporário:
+    <input id="code" placeholder="Temporary code" /><br />
+    
+    No back-end, do nosso sistema, podemos fazer uma chamada ao servidor do AuthQR e verificar qual o nome (id) do usuário que fez a chamada:
+    <input id="user" placeholder="User id" />
+  </body>
+</html>
