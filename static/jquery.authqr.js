@@ -24,8 +24,9 @@
             console.log('Connection successful');
               
         }).on('code', function(data){
-            console.log(data);
-            $(op.image).html('<img src="https://api.qrserver.com/v1/create-qr-code/?data='+data.code+'&size=220x220&margin=0" title="QR Code" alt="QR Code" />');
+            var fullcode = encodeURIComponent( "https://authqr.herokuapp.com/access/" + data.code);
+            
+            $(op.image).html('<img src="https://api.qrserver.com/v1/create-qr-code/?data='+fullcode+'&size=220x220&margin=0" title="QR Code" alt="QR Code" />');
               
         }).on('access', function(data){
             $(op.code).val(data.code);

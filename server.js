@@ -24,6 +24,11 @@ app.get('/', function (req, res) {
     var code = req.param('code');
     
     res.json( authQR.verify(code) );
+    
+}).get('/access/:code', function(req, res){ 
+    // Leu o QR Code e não tem o App instalado
+    res.sendfile(__dirname + '/static/explain.html');
+    
 });
 
 app.use(express.static(__dirname + '/static'));
